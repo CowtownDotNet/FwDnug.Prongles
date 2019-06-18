@@ -32,7 +32,7 @@ namespace FwDnug.Prongles
                         val = VotesToCast,
                     });
 
-                log.LogInformation($"Reponse: {response.Content}");
+                log.LogInformation($"Reponse: {await response.Content.ReadAsStringAsync()}");
 
                 var headerPresent = response
                     .Headers
