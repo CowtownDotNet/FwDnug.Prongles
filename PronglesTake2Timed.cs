@@ -32,6 +32,8 @@ namespace FwDnug.Prongles
                         val = VotesToCast,
                     });
 
+                log.LogInformation($"Reponse: {response.Content}");
+
                 var headerPresent = response
                     .Headers
                     .TryGetValues(RateLimitRemainingHeader, out IEnumerable<string> rateLimitHeader);
