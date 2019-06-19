@@ -6,6 +6,7 @@ using Flurl;
 using Flurl.Http;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace FwDnug.Prongles
 {
@@ -32,7 +33,9 @@ namespace FwDnug.Prongles
                         val = VotesToCast,
                     });
 
-                log.LogInformation($"Reponse: {await response.Content.ReadAsStringAsync()}");
+                var responseString = await response.Content.ReadAsStringAsync();
+                log.LogInformation($"Reponse: {responseString}");
+                log.LogInformation($"Response Status Code: {response.StatusCode}");
 
                 var headerPresent = response
                     .Headers
@@ -40,7 +43,7 @@ namespace FwDnug.Prongles
 
                 foreach (var header in response.Headers)
                 {
-                    log.LogInformation($"Header {header.Key}: {header.Value.FirstOrDefault()}");
+                    log.LogDebug($"Header {header.Key}: {header.Value.FirstOrDefault()}");
                 }
 
                 if(headerPresent && rateLimitHeader.Any())
@@ -49,7 +52,10 @@ namespace FwDnug.Prongles
                     int.TryParse(nativeHeader, out rateLimit );
                 }
 
-                count += VotesToCast;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    count += VotesToCast;
+                }
 
             } while ( rateLimit > 0 );
 
