@@ -52,7 +52,7 @@ namespace FwDnug.Prongles
                     int.TryParse(nativeHeader, out rateLimit );
                 }
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK && rateLimit > 0)
                 {
                     count += VotesToCast;
                 }
