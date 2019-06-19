@@ -17,7 +17,7 @@ namespace FwDnug.Prongles
         private const string RateLimitRemainingHeader = "X-Ratelimit-Remaining";
 
         [FunctionName("PronglesTake2Timed")]
-        public static async void Run([TimerTrigger("0/30 * * * * *")]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("*/30 * * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
